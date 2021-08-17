@@ -1,38 +1,51 @@
-import socket		 	 # Import socket module
-import sys
+import socket
+import constants
 
-s = socket.socket(socket.AF_INET,socket.SOCK_STREAM) 	  		 # Create a socket object
+#Create a socket...
+server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
-host = "127.0.0.1"                   # Get local machine name
-port = 9092
+# Main function...
+def main():
+    print('***********************************')
+    print('Servidor corriendo...')
+    print('IP:',constants.SERVER_ADDRESS )
+    print('PORT:', constants.PORT)
+    create_server_socket()
+    
+# Function to start server process...
+def create_server_socket():
+    tuple_connection = (constants.SERVER_ADDRESS,constants.PORT)
+    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    server_socket.bind(tuple_connection)
+    server_socket.listen(constants.BACKLOG)
+    print('Socket escuchando...', server_socket.getsockname())        
+        
+    # Loop for waiting new connections...
+    while True:
+          client_connection, client_address = server_socket.accept()		
+          print(f'Cliente nuevo. IP: {client_address[0]}.PORT: {client_address[1]}')
+
+          while True:
+               try:
+                    equation=client_connection.recv(1024).decode()
+                    if equation == "X":
+                         client_connection.send("X".encode())
+                         break
+                    else:
+                         print("Ecuación:", equation)
+                         result = eval(str(equation))
+                         client_connection.send(str(result).encode())
+               except (ZeroDivisionError):
+                    client_connection.send("ZeroDiv".encode())
+               except (ArithmeticError):
+                    client_connection.send("MathError".encode())
+               except (SyntaxError):
+                    client_connection.send("SyntaxError".encode())
+               except (NameError):
+                    client_connection.send("NameError".encode())
+
+          client_connection.close()
 
 
-s.bind((host, port)) 			 # Bind to the port
-s.listen(5) 			         # Now wait for client connection.
-
-print("Servidor corriendo")
-
-while True:
-     c, addr = s.accept() 		# Establish connection with client.
-     print('Conexión del cliente ', addr)
-
-     while True:
-          try:
-               equation=c.recv(1024).decode()
-               if equation == "X":
-                    c.send("X".encode())
-                    break
-               else:
-                    print("Ecuación:", equation)
-                    result = eval(str(equation))
-                    c.send(str(result).encode())
-          except (ZeroDivisionError):
-               c.send("ZeroDiv".encode())
-          except (ArithmeticError):
-               c.send("MathError".encode())
-          except (SyntaxError):
-               c.send("SyntaxError".encode())
-          except (NameError):
-               c.send("NameError".encode())
-
-     c.close()
+if __name__ == '__main__':
+     main()

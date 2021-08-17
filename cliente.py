@@ -5,14 +5,14 @@ import ipaddress
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM) 	  		 # Create a socket object
 
 
-host = "127.0.0.1"                    # Reading IP Address
-port = 9092                           # Reading port number
+host = "172.31.9.184"                    # Reading IP Address
+port = 9085                           # Reading port number
 s.connect((host, port))                           # Connecting to server
 print("IP:", host)
 print("PORT:", port)
 
 while(True):
-    equ=input("Calculadora Lab-01! \n - X Para salir \n - Ingrese los numeros y el operador para la operación ")
+    equ=input("Calculadora Lab-01! \n - X Para salir \n - Ingrese los numeros y el operador para la operación\n ")
     s.send(equ.encode())
     result = s.recv(1024).decode()
 
