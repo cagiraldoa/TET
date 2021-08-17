@@ -44,6 +44,7 @@ def create_server_socket():
                except (NameError):
                     client_connection.send("NameError".encode())
 
+          print("Conexión Terminada")
           client_connection.close()
 
 

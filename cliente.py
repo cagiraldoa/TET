@@ -31,4 +31,3 @@ while(True):
         print("Resultado:", result)
 
 s.close 				 # Close the socket when done
-print('Conexión Terminada')
