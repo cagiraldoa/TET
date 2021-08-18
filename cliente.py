@@ -6,7 +6,7 @@ s = socket.socket(socket.AF_INET,socket.SOCK_STREAM) 	  		 # Create a socket obj
 
 
 host = "172.31.9.184"                    # Reading IP Address
-port = 9085                           # Reading port number
+port = 9088                           # Reading port number
 s.connect((host, port))                           # Connecting to server
 print("IP:", host)
 print("PORT:", port)
