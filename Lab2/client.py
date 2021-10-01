@@ -1,8 +1,6 @@
 import http.client
 
-
-
-client = http.client.HTTPConnection('172.31.9.184', 8003)
+client = http.client.HTTPConnection('127.0.0.1', 8006)
 
 while(True):
 

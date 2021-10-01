@@ -34,7 +34,7 @@ class Servidor(BaseHTTPRequestHandler):
 
 def main():
 
-    PORT = 8003
+    PORT = 8006
     server = HTTPServer(('', PORT), Servidor)
     print("Servidor corriendo en el puerto", PORT)
     server.serve_forever()
