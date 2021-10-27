@@ -1,0 +1,41 @@
+version: '3.3'
+services:
+ wordpress:
+  image: wordpress
+  restart: always
+  environment:
+    WORDPRESS_DB_HOST: db
+    WORDPRESS_DB_USER: exampleuser
+    WORDPRESS_DB_PASSWORD: examplepass
+    WORDPRESS_DB_NAME: exampledb
+  volumes:
+   - wordpress:/var/www/html
+ db:
+  image: mysql:5.7
+  restart: always
+  environment:
+   MYSQL_DATABASE: exampledb
+   MYSQL_USER: exampleuser
+   MYSQL_PASSWORD: examplepass
+   MYSQL_RANDOM_ROOT_PASSWORD: '1'
+  volumes:
+   - db:/var/lib/mysql
+ letsencrypt:
+  image: linuxserver/letsencrypt
+  container_name: letsencrypt
+  depends_on:
+    - wordpress
+  volumes:
+   - ./config:/config
+  environment:
+    - EMAIL=alejoferna2301@gmail.com
+    - URL=www.topicostelematica.ga
+    - VALIDATION=http
+    - PUID=500
+    - PGID=500
+  ports:
+   - "80:80"
+   - "443:443"
+volumes:
+  wordpress:
+  db:
