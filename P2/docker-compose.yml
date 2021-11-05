@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+ wordpress:
+  image: wordpress
+  restart: always
+  ports:
+    - 80:80
+    - 443:433
+  environment:
+    WORDPRESS_DB_HOST: db
+    WORDPRESS_DB_USER: cagiraldoa
+    WORDPRESS_DB_PASSWORD: telematica2021*
+    WORDPRESS_DB_NAME: telematica-db
+  volumes:
+    - wordpress:/var/www/html
+ db:
+  image: mysql:5.7
+  restart: always
+  environment:
+    MYSQL_DATABASE: telematica-db
+    MYSQL_USER: cagiraldoa
+    MYSQL_PASSWORD: telematica2021*
+    MYSQL_RANDOM_ROOT_PASSWORD: '1'
+  volumes:
+    - db:/var/lib/mysql
+volumes:
+ wordpress:
+ db:
