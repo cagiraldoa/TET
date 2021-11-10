@@ -7,17 +7,17 @@ services:
     - 80:80
     - 443:433
   environment:
-    WORDPRESS_DB_HOST: db
+    WORDPRESS_DB_HOST: 35.202.174.30
     WORDPRESS_DB_USER: cagiraldoa
     WORDPRESS_DB_PASSWORD: telematica2021*
-    WORDPRESS_DB_NAME: telematica-db
+    WORDPRESS_DB_NAME: tet
   volumes:
     - wordpress:/var/www/html
  db:
   image: mysql:5.7
   restart: always
   environment:
-    MYSQL_DATABASE: telematica-db
+    MYSQL_DATABASE: tet
     MYSQL_USER: cagiraldoa
     MYSQL_PASSWORD: telematica2021*
     MYSQL_RANDOM_ROOT_PASSWORD: '1'
@@ -26,4 +26,3 @@ services:
 volumes:
  wordpress:
  db:
-  
